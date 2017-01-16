@@ -27,7 +27,9 @@ function renderButtons() {
   }
 }
 
-// Add an event handler for the user form to add additional animals to the array
+// ----- Event Handlers ----- //
+
+// An event handler for the user form to add additional animals to the array
 $("#add-animal").on("click", function(event) {
   event.preventDefault();
 
@@ -42,11 +44,33 @@ $("#add-animal").on("click", function(event) {
   renderButtons();
 });
 
-// ----- Main Game Routine ----- //
+// fetchAnimalGifs will fetch ten animal Gifs with the Giphy API
+function fetchAnimalGifs() {
+  var animalName = $(this).attr("data-animal");
+  console.log("Animal is: " + animalName);
 
+  // Construct the Giphy URL
+  /*
+  var queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&r=json";
+
+    $.ajax({
+      method: "GET",
+      url: queryURL,
+    })
+    .done(function( result ) {
+      // Log the data in console
+      console.log("result = " + JSON.stringify(result));
+
+      // Display the movie info
+      $("#movie-info").html(JSON.stringify(result));
+    });
+  */
+}
+
+// Render the initial animal buttons when the HTML has finished loading
 $(document).ready(function() {
-
-  // Display the intial animal buttons on page load
   renderButtons();
+});
 
-}); // main game routine
+// An event handler for the animal buttons to fetch appropriate Gifs
+$(document).on("click", ".animalButton", fetchAnimalGifs);

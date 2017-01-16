@@ -76,7 +76,8 @@ body {
 
 .formPanel {
   position: relative;
-  top: 20px;
+  top: 30px;
+  right: 35px;
   border-radius: 15px 50px;
   background-color: #f2d3e7;
   height: 145px;

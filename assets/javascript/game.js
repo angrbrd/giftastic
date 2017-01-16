@@ -27,11 +27,26 @@ function renderButtons() {
   }
 }
 
+// Add an event handler for the user form to add additional animals to the array
+$("#add-animal").on("click", function(event) {
+  event.preventDefault();
+
+  // Get the input from the textbox
+  var animal = $("#animal-input").val().trim();
+
+  // The animal from the textbox is then added to our animalsArr array
+  animalsArr.push(animal);
+  $("#animal-input").val("");
+
+  // Redraw the animal buttons
+  renderButtons();
+});
+
 // ----- Main Game Routine ----- //
 
 $(document).ready(function() {
 
-  // Display the intial animal buttons
+  // Display the intial animal buttons on page load
   renderButtons();
 
 }); // main game routine

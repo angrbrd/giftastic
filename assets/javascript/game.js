@@ -85,6 +85,21 @@ function fetchAnimalGifs() {
   });
 }
 
+// animateAnimalGif will animate a still Gif and stop a moving Gif
+function animateAnimalGif() {
+  // The image state will be either "still" or "animated"
+  var state = $(this).find("img").attr("data-state");
+
+  // Make the Gif either animated or still depending on the "data-state" value
+  if (state === "still") {
+    $(this).find("img").attr("src", $(this).find("img").attr("data-animate"));
+    $(this).find("img").attr("data-state", "animate");
+  } else {
+    $(this).find("img").attr("src", $(this).find("img").attr("data-still"));
+    $(this).find("img").attr("data-state", "still");
+  }
+}
+
 // Render the initial animal buttons when the HTML has finished loading
 $(document).ready(function() {
   renderButtons();
@@ -92,3 +107,6 @@ $(document).ready(function() {
 
 // An event handler for the animal buttons to fetch appropriate Gifs
 $(document).on("click", ".animalButton", fetchAnimalGifs);
+
+// Add an event handler for the animal Gifs to make the image animate and stop
+$(document).on("click", ".animalGif", animateAnimalGif);

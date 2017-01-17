@@ -44,27 +44,45 @@ $("#add-animal").on("click", function(event) {
   renderButtons();
 });
 
-// fetchAnimalGifs will fetch ten animal Gifs with the Giphy API
+// fetchAnimalGifs will fetch animal Gifs with the Giphy API
 function fetchAnimalGifs() {
+  // Get the animal name from the button clicked
   var animalName = $(this).attr("data-animal");
-  console.log("Animal is: " + animalName);
+  var animalStr = animalName.split(" ").join("+");
 
   // Construct the Giphy URL
-  /*
-  var queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&r=json";
+  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animalStr + 
+                 "&rating=pg-13&limit=20&api_key=dc6zaTOxFJmzC";
 
-    $.ajax({
-      method: "GET",
-      url: queryURL,
-    })
-    .done(function( result ) {
-      // Log the data in console
-      console.log("result = " + JSON.stringify(result));
+  // Make the AJAX call to the Giphy API
+  $.ajax({
+    method: "GET",
+    url: queryURL,
+  })
+  .done(function( result ) {
+    // Get the results array
+    var dataArray = result.data;
 
-      // Display the movie info
-      $("#movie-info").html(JSON.stringify(result));
-    });
-  */
+    // Create and display div elements for each of the returned Gifs
+    $("#gifPanel").empty();
+    for (var i = 0; i < dataArray.length; i++) {
+      var newDiv = $("<div>");
+      newDiv.addClass("animalGif");
+
+      var newRating = $("<h2>").html("Rating: " + dataArray[i].rating);
+      newDiv.append(newRating);
+
+      var newImg = $("<img>");
+      newImg.attr("src", dataArray[i].images.fixed_height_still.url);
+      newImg.attr("data-still", dataArray[i].images.fixed_height_still.url);
+      newImg.attr("data-animate", dataArray[i].images.fixed_height.url);
+      newImg.attr("data-state", "still");
+      newDiv.append(newImg);
+
+      // Append the new Gifs to the gifPanel
+      $("#gifPanel").append(newDiv);
+    }
+  });
 }
 
 // Render the initial animal buttons when the HTML has finished loading
